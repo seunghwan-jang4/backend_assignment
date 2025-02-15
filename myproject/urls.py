@@ -31,5 +31,5 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('api/accounts/', include('accounts.urls')), # accounts 앱 URLconf 등록    
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'), # Swagger UI 엔드포인트
 ]
