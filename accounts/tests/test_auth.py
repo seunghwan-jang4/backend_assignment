@@ -60,4 +60,4 @@ def test_token_refresh():
     # 갱신 요청이 성공적으로 처리되었는지 확인
     assert refresh_response.status_code == status.HTTP_200_OK
     # 새 access_token이 응답 데이터에 포함되어 있는지 확인
-    assert "access_token" in refresh_response.data
+    assert "access" in refresh_response.data
