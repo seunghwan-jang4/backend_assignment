@@ -35,7 +35,8 @@ class LoginView(generics.GenericAPIView):  # 로그인을 처리하는 뷰
             if user:  # 인증된 사용자인 경우
                 refresh = RefreshToken.for_user(user)  # JWT 리프레시 토큰 생성
                 return Response({
-                    "token": str(refresh.access_token)
+                    "access_token": str(refresh.access_token),  # Access Token 반환
+                    "refresh_token": str(refresh)  # Refresh Token 반환
                 }, status=status.HTTP_200_OK)  # 성공 응답 반환
 
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)  # 오류 응답 반환
