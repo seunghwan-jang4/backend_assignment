@@ -24,6 +24,10 @@ class LoginSerializer(serializers.Serializer):  # 로그인 시리얼라이저 �
     password = serializers.CharField(write_only=True)  # 비밀번호 필드 정의, 쓰기 전용
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)  # 비밀번호 필드 정의, 쓰기 전용
+
     class Meta:
         model = User
         fields = ['username', 'password', 'nickname']
+
+
