@@ -22,3 +22,8 @@ class SignupSerializer(serializers.ModelSerializer):  # 회원가입 시리얼�
 class LoginSerializer(serializers.Serializer):  # 로그인 시리얼라이저 정의
     username = serializers.CharField()  # 사용자 이름 필드 정의
     password = serializers.CharField(write_only=True)  # 비밀번호 필드 정의, 쓰기 전용
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'nickname']
