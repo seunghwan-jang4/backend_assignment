@@ -9,9 +9,9 @@ User = get_user_model()
 def test_signup():
     client = APIClient()
     response = client.post("/api/accounts/signup/", {
-        "username": "testuser",
-        "password": "testpassword123",
-        "nickname": "TestNick"
+        "username": "JIN HO",
+        "password": "12341234",
+        "nickname": "Mentos"
     }, format="json")
 
     # 회원가입 요청이 성공적으로 처리되었는지 확인
@@ -25,11 +25,11 @@ def test_signup():
 def test_login():
     client = APIClient()
     # 테스트 사용자 생성
-    User.objects.create_user(username="testuser", password="testpassword123", nickname="TestNick")
+    User.objects.create_user(username="JIN HO", password="12341234", nickname="Mentos")
 
     response = client.post("/api/accounts/login/", {
-        "username": "testuser",
-        "password": "testpassword123"
+        "username": "JIN HO",
+        "password": "12341234"
     }, format="json")
 
     # 로그인 요청이 성공적으로 처리되었는지 확인
@@ -46,8 +46,8 @@ def test_token_refresh():
 
     # 로그인하여 JWT 토큰 획득
     login_response = client.post("/api/accounts/login/", {
-        "username": "testuser",
-        "password": "testpassword123"
+        "username": "JIN HO",
+        "password": "12341234"
     }, format="json")
 
     refresh_token = login_response.data["refresh_token"]
