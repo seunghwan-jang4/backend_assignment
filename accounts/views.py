@@ -13,7 +13,6 @@ from datetime import datetime, timedelta
 from rest_framework.decorators import api_view, permission_classes
 
 logger = logging.getLogger(__name__)
-
 User = get_user_model()
 
 # JWT 토큰을 생성하고 검증하는 클래스
@@ -46,7 +45,29 @@ class JWTManager:
             self.secret_key,
             algorithms=[self.algorithm]
         )
+# JWTManager 인스턴스 생성
+jwt_manager = JWTManager(secret_key='your-secret-key')
 
+# 토큰 생성 및 검증을 처리하는 뷰
+@api_view(['POST'])
+def create_token(request):
+    payload = request.data
+    token = jwt_manager.create_token(payload)
+    return Response({"token": token}, status=status.HTTP_200_OK)
+
+# 토큰 검증을 처리하는 뷰
+@api_view(['POST'])
+def verify_token(request):
+    token = request.data.get('token')
+    try:
+        decoded = jwt_manager.verify_token(token)
+        return Response(decoded, status=status.HTTP_200_OK)
+    except jwt.ExpiredSignatureError:
+        return Response({"error": "Token has expired"}, status=status.HTTP_400_BAD_REQUEST)
+    except jwt.InvalidTokenError:
+        return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
+    
+# 회원가입을 처리하는 뷰
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
@@ -62,6 +83,7 @@ def signup(request):
     logger.error(f"Signup failed: {serializer.errors}")
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# 로그인을 처리하는 뷰
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
